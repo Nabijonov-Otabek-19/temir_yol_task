@@ -10,7 +10,7 @@ import 'features/domain/repository/repository.dart';
 
 final GetIt di = GetIt.instance;
 
-Future<void> init() async {
+Future<void> setupDI() async {
   // BaseApi
   di.registerLazySingleton<BaseApi>(() => BaseApi());
 
