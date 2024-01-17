@@ -36,40 +36,56 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(title: const Text("Weather app")),
       body: BlocProvider(
         create: (context) => di.get<HomeBloc>(),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          controller: scrollController,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    return Builder(builder: (context) {
-                      if (state.status == LoadingState.EMPTY) {
-                        return const MessageDisplay(message: "Loading...");
-                      } else if (state.status == LoadingState.LOADING) {
-                        return const LoadingWidget();
-                      } else if (state.status == LoadingState.LOADED) {
-                        return weatherDataWidget(
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                di
+                    .get<HomeBloc>()
+                    .add(GetCurrentWeatherEvent(city: 'Tashkent'));
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Builder(
+                  builder: (context) {
+                    if (state.status == LoadingState.EMPTY) {
+                      return const MessageDisplay(message: "Loading...");
+                    } else if (state.status == LoadingState.LOADING) {
+                      return const LoadingWidget();
+                    } else if (state.status == LoadingState.LOADED) {
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        child: weatherDataWidget(
                           weatherData: state.weatherData!,
-                          onRefreshClick: () => di
-                              .get<HomeBloc>()
-                              .add(GetCurrentWeatherEvent(city: 'Tashkent')),
-                        );
-                      } else if (state.status == LoadingState.ERROR) {
-                        return MessageDisplay(message: state.errorMessage);
-                      }
-                      return Container();
-                    });
+                          onRefreshClick: () async {
+                            di
+                                .get<HomeBloc>()
+                                .add(GetCurrentWeatherEvent(city: 'Tashkent'));
+                          },
+                        ),
+                      );
+                    } else if (state.status == LoadingState.ERROR) {
+                      return MessageDisplay(message: state.errorMessage);
+                    }
+                    return Container();
                   },
                 ),
-              ],
-            ),
-          ),
+
+                /*Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+
+                  ],
+                ),*/
+              ),
+            );
+          },
         ),
       ),
     );
