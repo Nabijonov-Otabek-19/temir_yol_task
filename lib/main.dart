@@ -8,6 +8,32 @@ void main() async {
 
   await setupDI();
 
+  ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Error'),
+        ),
+        body: const Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.error_outline_outlined,
+                color: Colors.red,
+                size: 100,
+              ),
+              Text(
+                'Oops... something went wrong',
+                style: TextStyle(fontSize: 24, color: Colors.black),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  };
+
   runApp(const MyApp());
 }
 
