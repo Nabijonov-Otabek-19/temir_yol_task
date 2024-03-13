@@ -1,14 +1,14 @@
-class WeatherData {
-  LocationData? location;
+class WeatherEntity {
+  LocationEntity? location;
   CurrentData? current;
 
-  WeatherData({
+  WeatherEntity({
     this.location,
     this.current,
   });
 }
 
-class LocationData {
+class LocationEntity {
   String? name;
   String? region;
   String? country;
@@ -18,7 +18,7 @@ class LocationData {
   int? localtimeEpoch;
   String? localtime;
 
-  LocationData({
+  LocationEntity({
     this.name,
     this.region,
     this.country,

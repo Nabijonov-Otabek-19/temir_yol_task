@@ -1,6 +1,6 @@
-import '../../domain/entity/weather_data.dart';
+import '../../domain/entity/weather_entity.dart';
 
-class WeatherModel extends WeatherData {
+class WeatherModel extends WeatherEntity {
   WeatherModel({
     required super.current,
     required super.location,
@@ -18,7 +18,7 @@ class WeatherModel extends WeatherData {
   }
 }
 
-class LocationModel extends LocationData {
+class LocationModel extends LocationEntity {
   LocationModel({
     required super.name,
     required super.region,

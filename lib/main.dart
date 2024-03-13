@@ -3,7 +3,7 @@ import 'package:temir_yol_task/injection_container.dart';
 
 import 'features/presentation/screen/home/home_screen.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await setupDI();

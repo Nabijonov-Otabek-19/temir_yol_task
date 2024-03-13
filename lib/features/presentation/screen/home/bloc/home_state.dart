@@ -3,7 +3,7 @@ part of 'home_bloc.dart';
 @immutable
 class HomeState {
   final LoadingState status;
-  final WeatherData? weatherData;
+  final WeatherEntity? weatherData;
   final String errorMessage;
 
   const HomeState({
@@ -14,7 +14,7 @@ class HomeState {
 
   HomeState copyWith({
     LoadingState? status,
-    WeatherData? weatherData,
+    WeatherEntity? weatherData,
     String? errorMessage,
   }) {
     return HomeState(
